@@ -1,6 +1,7 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const assert = require('assert');
 const ppt = require('./hooks');
+const { setBannerHref } = require('./test-data');
 
 
 Given('Bob is on the homepage', async () => {
@@ -16,35 +17,32 @@ Given('Bob is on the homepage', async () => {
     try {
         assert.strictEqual(logoTitle, "Modanisa")
     } catch (error) {
-        throw new Error("Bob's lost!!: Bob is not on Modanisa... He's floating the web.", error)
+        throw new Error("Bob's lost!!.. He's floating the web.", error)
     }
 });
 
-//create a variable to store the href of the banner we're going to click
-let bannerHref;
+let bannerUrl; //to use the url in multiple functions.
 
 When('Bob clicks on a banner', async () => {
-    bannerHref = await ppt.page.evaluate(() => {
-        let banner = document.querySelector('#desktop_hero_slot1_tr > div > a');
+    bannerUrl = await ppt.page.evaluate(() => {
+        let banner = document.querySelector('[data-testid="desktop_header_slot1_tr-1_link"]');
         return banner ? banner.getAttribute('href') : null; //return href of the banner, if not available then return null
-    });
+    })
+    setBannerHref(bannerUrl); // storing bannerHref as a global variable to access it on different scenarios.
 
-    await ppt.page.click('#desktop_hero_slot1_tr > div > a');
+    await ppt.page.click('[data-testid="desktop_header_slot1_tr-1_link"]');
 });
 
 Then('Bob should be redirected to the associated listing page', async () => {
 
     const directedUrl = await ppt.page.url(); //get the url of the current page
 
-    console.log('Banner href:', bannerHref);
+    console.log('Banner href:', bannerUrl);
     console.log('Directed URL:', directedUrl);
 
     try {
-        assert.strictEqual(bannerHref, directedUrl);
+        assert.strictEqual(bannerUrl, directedUrl);
     } catch (error) {
         throw new Error("Bob's lost!!.. He's floating the web.");
     }
-
 });
-
-module.exports = bannerHref //export this to use it on 'scenario: select a product from listing page'

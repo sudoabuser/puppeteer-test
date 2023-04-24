@@ -1,21 +1,28 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const assert = require('assert');
 const ppt = require('./hooks');
-const bannerHref = require('./click-on-banner');
+const { bannerHref } = require('./test-data');
+const { setBannerHref } = require('./test-data');
 
-//initialize a variable to store href of the clicked product for double-checking the Then part.
+//initialize a variable to store href of the clicked product for double-checking the "Then" part.
 let productDetailHref;
+console.log(bannerHref)
 
 Given('Bob is on the listing page', async () => {
+    console.log(bannerHref)
     await ppt.page.goto(bannerHref);
 });
 
 When('Bob selects a product', async () => {
-    await page.evaluate(() => {
-        const element = document.evaluate('/html/body/div[3]/div[7]/div[1]/div/div/div[3]/div[1]/div[1]/a', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-        //I used xpath, since it was more convenient in two ways: first, this is shorter, second, it wasn't working properly.
+    await ppt.page.evaluate(() => {
+        const element = document.querySelector('[data-testid="listing-product-link"]')
         element.click();
-      });      
+    });
+    productDetailHref = await ppt.page.evaluate(() => {
+        let element = document.querySelector('[data-testid="listing-product-link"]')
+        return element.getAttribute('href')
+    })
+    setBannerHref(productDetailHref)
 });
 
 Then('Bob should see the product detail page', async () => {
@@ -32,4 +39,3 @@ Then('Bob should see the product detail page', async () => {
     }
 
 });
-
