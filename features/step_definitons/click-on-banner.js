@@ -25,12 +25,12 @@ let bannerUrl; //to use the url in multiple functions.
 
 When('Bob clicks on a banner', async () => {
     bannerUrl = await ppt.page.evaluate(() => {
-        let banner = document.querySelector('[data-testid="desktop_header_slot1_tr-1_link"]');
+        let banner = document.querySelector('[desktop_header_slot1_tr-0_link]');
         return banner ? banner.getAttribute('href') : null; //return href of the banner, if not available then return null
     })
     setBannerHref(bannerUrl); // storing bannerHref as a global variable to access it on different scenarios.
 
-    await ppt.page.click('[data-testid="desktop_header_slot1_tr-1_link"]');
+    await ppt.page.click('[desktop_header_slot1_tr-0_link]');
 });
 
 Then('Bob should be redirected to the associated listing page', async () => {

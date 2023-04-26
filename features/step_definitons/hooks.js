@@ -5,8 +5,7 @@ const ppt = {};
 
 Before(async () => {
     ppt.browser = await puppeteer.launch({
-        headless: false,
-        slowMo: 10   // this is for the 'scenario: click on banner'. otherwise it didn't fetch the subdomain of the url somehow.
+        headless: false   // this is for the 'scenario: click on banner'. otherwise it didn't fetch the subdomain of the url somehow.
     });
     ppt.pages = await ppt.browser.pages();
     ppt.page = ppt.pages[0];
