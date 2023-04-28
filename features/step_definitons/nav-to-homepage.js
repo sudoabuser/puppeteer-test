@@ -15,7 +15,8 @@ Given('Bob is on the internet', async () => {
 
 
 When('Bob goes to www.modanisa.com', async () => {
-    await ppt.page.goto('https://www.modanisa.com')
+    await ppt.page.goto('https://www.modanisa.com', { waitUntil: 'domcontentloaded'})
+    
 });
 
 
