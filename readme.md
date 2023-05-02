@@ -3,8 +3,11 @@ This is a simple personal project that is mocking a customer buying a dress on m
 # Installation:
 
 we need npm (node package manager), puppeteer and cucumber for this project. here is the version numbers please check these out if not working properly:
+
 -npm: 9.4.0
+
 -puppeteer: 19.8.5
+
 -cucumber: 9.1.0 // use @cucumber/cucumber for the latest releases
 
 first, install npm if you don't already have it.
