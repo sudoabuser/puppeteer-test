@@ -34,5 +34,4 @@ npm i @cucumber/cucumber
 ## Note:
 
 I've created a file 'hooks.js' and initialized puppeteer variables in it in order to access them globally without needing to initialize them again.
-There were tons of error occured when I tried to initialize the variables 'page' and 'browser' in hooks.js and just simply export them, to fix it
-I've created an object called 'ppt' and initialized puppeteer variables as argument.
+There were tons of error occured when I tried to initialize the variables `page` and `browser` in hooks.js and just simply export them, to fix it I've created an object called `ppt` and initialized puppeteer variables as argument.
