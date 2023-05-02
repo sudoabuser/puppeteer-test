@@ -1,6 +1,7 @@
 This is a simple personal project that is mocking a customer buying a dress on modanisa.com.
 
-#Installation:
+# Installation:
+
 we need npm (node package manager), puppeteer and cucumber for this project. here is the version numbers please check these out if not working properly:
 -npm: 9.4.0
 -puppeteer: 19.8.5
@@ -19,12 +20,13 @@ npm i puppeteer
 npm i @cucumber/cucumber
 ```
 
-#Usage:
+# Usage:
+
 `npm test`     // run all the tests
 
 `npm run demo`     //  run the tests tagged as @demo. don't forget to tag scenarios in file 'tasks.feature'
 
-##Note:
+## Note:
 
 I've created a file 'hooks.js' and initialized puppeteer variables in it in order to access them globally without needing to initialize them again.
 There were tons of error occured when I tried to initialize the variables 'page' and 'browser' in hooks.js and just simply export them, to fix it
