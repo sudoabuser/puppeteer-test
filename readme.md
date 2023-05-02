@@ -2,7 +2,7 @@ This is a simple personal project that is mocking a customer buying a dress on m
 
 # Installation:
 
-we need npm (node package manager), puppeteer and cucumber for this project. here is the version numbers please check these out if not working properly:
+we need npm (node package manager), puppeteer and cucumber for this project. here is the version numbers I've used, please check these out if not working properly:
 
 -npm: 9.4.0
 
