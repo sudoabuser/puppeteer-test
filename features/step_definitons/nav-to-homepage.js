@@ -6,8 +6,8 @@ setDefaultTimeout(10000);
 
 Given('Bob is on the internet', async () => {
     let response = await ppt.page.goto('https://www.google.com')
-    if (response.status() == 200) { // look for HTML response. 200 means we're connected.
-        console.log('Bob made it to the internet!')
+    if (response.status() == 200) {    // look for HTML response. 200 means server is responding.
+        console.log('\nBob made it to the internet!')
     } else {
         throw new Error("Bob's lost!!: Response status != 200")
     }
@@ -19,17 +19,15 @@ When('Bob goes to www.modanisa.com', async () => {
     
 });
 
-
-//check if the title attribute of the logo is modanisa
 Then('Bob should see the modanisa homepage', async () => {
-    //I've used js to fetch the logo
+    // I've used js to fetch the logo
     const logoTitle = await ppt.page.evaluate(() => {
         let logo = document.querySelector("#header > div.wrapper > div > a.logo");
-        return logo ? logo.getAttribute('title') : null; //return the title of the logo, if not available then return null
+        return logo ? logo.getAttribute('title') : null;    // return the title of the logo, if not available then return null
     });
 
     try {
-        assert.strictEqual(logoTitle, "Modanisa") // check if logotitle is string "Modanisa"
+        assert.strictEqual(logoTitle, "Modanisa")    // check if logotitle is string "Modanisa"
     } catch (error) {
         throw new Error("Bob's lost!!.. He's floating the web.")
     }
