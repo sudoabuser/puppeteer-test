@@ -2,36 +2,36 @@ const { Given, When, Then } = require('@cucumber/cucumber');
 const assert = require('assert');
 const ppt = require('./hooks');
 
-let productDetailHref;
+let productIds = [];
 
 Given('Bob is on the listing page', async () => {
-    await ppt.page.goto('https://www.modanisa.com/harca-kazan.list', { waitUntil: 'domcontentloaded' });
+    await ppt.page.goto('https://www.modanisa.com/harca-kazan.list', { waitUntil: 'domcontentloaded' }); //to hinder timeout error, just wait for domcontent
 });
 
 When('Bob selects a product', async () => {
-    productDetailHref = await ppt.page.evaluate(() => {
-        let element = document.querySelector('[data-testid="listing-product-link"]')
-        return element.getAttribute('href')
+    let productId = await ppt.page.evaluate(() => {
+        let product = document.querySelector('[data-testid="listing-product"]');
+        return product ? product.getAttribute('data-product-id') : null;  //take the product id
     })
+    productIds.push(productId)  //place it in an array
 
-    await ppt.page.evaluate(() => {
-        let element = 'https://www.modanisa.com' + document.querySelector('[data-testid="listing-product-image"]:nth-child(1)') ///.html donderiyo o yuzden erisim reddediliyo
-        console.log(element)
-        element.click();
-    });
-    await ppt.page.waitForTimeout(3000)
+    await ppt.page.click('[data-testid="listing-product"]');
+    console.log('product clicked: ', productId)
 });
 
 Then('Bob should see the product detail page', async () => {
-    const directedUrl = await ppt.page.url(); //get the url of the current page
-
-    console.log('Product href:', productDetailHref);
-    console.log('Directed URL:', directedUrl);
+    await ppt.page.waitForSelector('#productData')
+    const currentProductId = await ppt.page.evaluate(() => {
+        let product = document.querySelector('#productData')
+        return product ? product.getAttribute('data-product-id') : null;    //take the directed products' id
+    })
+    productIds.push(currentProductId) //place it in the same array we've created before
 
     try {
-        assert.strictEqual(productDetailHref, directedUrl);
+        assert.strictEqual(productIds[0], productIds[1])   //check if they are the same to verify the directed product
     } catch (error) {
-        throw new Error("Bob's lost!!.. He's floating the web.");
+        throw new Error('Bob got misdirected into a wrong product!:', productIds[1])  //if the id's not equal, throw an error with the directed product id
     }
-
 });
+
+module.exports = productIds

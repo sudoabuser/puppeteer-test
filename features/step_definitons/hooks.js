@@ -1,11 +1,14 @@
 const { Before, After } = require('@cucumber/cucumber');
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra')
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+puppeteer.use(StealthPlugin())
 const ppt = {};
 
 
 Before(async () => {
     ppt.browser = await puppeteer.launch({
-        headless: false   // this is for the 'scenario: click on banner'. otherwise it didn't fetch the subdomain of the url somehow.
+        headless: false,
+
     });
     ppt.pages = await ppt.browser.pages();
     ppt.page = ppt.pages[0];
