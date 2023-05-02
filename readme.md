@@ -19,7 +19,7 @@ npm i puppeteer
 npm i @cucumber/cucumber
 ```
 
-@Usage:
+#Usage:
 `npm test`     // run all the tests
 
 `npm run demo`     //  run the tests tagged as @demo. don't forget to tag scenarios in file 'tasks.feature'
