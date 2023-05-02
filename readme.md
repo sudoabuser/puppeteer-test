@@ -24,12 +24,9 @@ npm run demo  //  run the tests tagged as @demo. don't forget to tag scenarios i
 
 
 I've created a file 'hooks.js' and initialized puppeteer variables in it in order to access them globally without needing to initialize them again.
-There were tons of error occured when I tried to initialize the variables 'page' and 'browser' in hooks.js and just simply export them, so to fix it,
+There were tons of error occured when I tried to initialize the variables 'page' and 'browser' in hooks.js and just simply export them, to fix it
 I've created an object called 'ppt' and initialized puppeteer variables as argument.
 
-
-
-Usage instructions: Explain how to use the project, including any configuration options and commands that need to be run.
 
 Features: Highlight the key features of the project and what sets it apart from other similar projects.
 

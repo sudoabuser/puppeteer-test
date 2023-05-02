@@ -20,8 +20,8 @@ Feature: Visit and Pay
     Scenario: Select the size and color of a product
         Given Bob is on the product detail page
         When Bob selects the size and color of the product
-        And Bob adds the product in the charts
-        Then Bob should see the customized product in the chart
+        And Bob adds the product in the chart
+        # Then Bob should see the customized product in the chart
 
 # Scenario: Navigate to the cart
 #     Given Bob has a product in the cart

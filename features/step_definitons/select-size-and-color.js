@@ -3,6 +3,8 @@ const assert = require('assert');
 const ppt = require('./hooks');
 const productIds = require('./select-a-product-listed');
 
+let selectedSize;
+let selectedColor;
 
 Given('Bob is on the product detail page', async () => {
     await ppt.page.goto('https://www.modanisa.com', { waitUntil: 'domcontentloaded' });    //nav to home page
@@ -14,14 +16,26 @@ Given('Bob is on the product detail page', async () => {
 
 When('Bob selects the size and color of the product', async () => {
     await ppt.page.click('#other-color-products-container > a:nth-child(2)')    //select the first color, since there may not be a second one
-    await ppt.page.waitForSelector('#size-box-container', { waitUntil: 'domcontentloaded' });
-    await ppt.page.click('#size-box-container')    //click size container
-    await ppt.page.waitForTimeout(2000)
+    selectedColor = await ppt.page.evaluate(() => {    
+        const productColor = document.querySelector('#other-color-products-container > a:nth-child(2)')
+        return productColor.getAttribute('data-variant')    //fetch data-variant ,i.e. color, of the product
+    })
+    await ppt.page.waitForSelector('#size-box-container', { waitUntil: 'domcontentloaded' });    //wait until the sizes are loaded
     // await ppt.page.keyboard.press('ArrowDown');
     // await ppt.page.keyboard.type(String.fromCharCode(13));
-    await ppt.page.evaluate(() => {
-        const smallestSize = document.querySelector('#size-box-container > select > option:last-child')
-        return smallestSize.click()
-    })    //select the smallest size
-    await ppt.page.waitForTimeout(5000)
+
+    const smallestSize = await ppt.page.$('#size-box-container > select option:not(.disable_selected, [disabled])')    //point to the smallest size except from the placeholder and disabled options
+    await ppt.page.evaluate((el) => {
+        return el.selected = true
+    }, smallestSize)    //select the smallest size
+
+    selectedSize = await ppt.page.evaluate((el) => {
+        const innerText = el.innerHTML;
+        return innerText
+    }, smallestSize)    //fetch the inner html of the selector (e.g. 42-44)
+
+    console.log('\nselected size:', selectedSize)
+    console.log('selected color:', selectedColor)
 })
+
+// When('Bob adds the product in the chart', async () => {})

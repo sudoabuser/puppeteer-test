@@ -16,7 +16,7 @@ When('Bob selects a product', async () => {
     productIds.push(productId)  //place it in an array
 
     await ppt.page.click('[data-testid="listing-product"]');
-    console.log('product clicked: ', productId)
+    console.log('\nclicked to product', productId)
 });
 
 Then('Bob should see the product detail page', async () => {
