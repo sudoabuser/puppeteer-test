@@ -31,5 +31,5 @@ Then('Bob should see the modanisa homepage', async () => {
     } catch (error) {
         throw new Error("Bob's lost!!.. He's floating the web.")
     }
-    console.log(logoTitle)
+    console.log('\n', logoTitle)
 });

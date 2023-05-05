@@ -14,7 +14,7 @@ When('Bob selects a product', async () => {
         return product ? product.getAttribute('data-product-id') : null;  //take the product id
     })
     productIds.push(productId)  //place it in an array
-
+    await ppt.page.waitForSelector('[data-testid="listing-product"]', { waitUntil: 'domcontentloaded' })
     await ppt.page.click('[data-testid="listing-product"]');
     console.log('\nclicked to product', productId)
 });
