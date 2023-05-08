@@ -11,12 +11,12 @@ Feature: Add a product in cart
         Given Bob is on the homepage
         When Bob clicks on a banner
         Then Bob should be redirected to the associated listing page
-    @demo
+
     Scenario: Select a product from the listing page
         Given Bob is on the listing page
         When Bob selects a product
         Then Bob should see the product detail page
-    @demo
+
     Scenario: Select the size and color of a product
         Given Bob is on the product detail page
         When Bob selects the size and color of the product
