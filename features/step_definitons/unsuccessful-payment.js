@@ -4,27 +4,30 @@ const ppt = require("./hooks");
 setDefaultTimeout(20000);
 
 Given("Bob is on the payment page", async () => {
-    await ppt.page.goto('https://m.modanisa.com/checkout/?client_username=modanisa')
+    await ppt.page.goto('https://modanisa.com/checkout/?client_username=modanisa', {waitUntil:'networkidle0'})
 });
 
 When("Bob fills out the payment form", async () => {
-    await ppt.page.type('#checkoutAddress-cardOwnerNameInput', 'testing testing')
-    await ppt.page.type('#checkoutAddress-cardNumberInput', '5487933072677662')
+    await ppt.page.type('#checkoutAddress-cardOwnerNameInput', 'John Doe')
+    await ppt.page.type('#checkoutAddress-cardNumberInput', '5528790000000008')
 
-    // select the month april ---- THIS MAY CAUSE PROBLEM KIYAM BE CAREFUL!!! ----
-    await ppt.page.evaluate((select) => {
-        const monthApril = document.querySelector('#checkoutAddress-cardExpireDateMonthInput').options[4]
-        select.value = monthApril.value;
-    })
+    // select the month april
+    await ppt.page.select('#checkoutAddress-cardExpireDateMonthInput', '12');
 
-    // select the year 2028
-    await ppt.page.evaluate((select) => {
-        const year2028 = document.querySelector('#checkoutAddress-cardExpireDateYearInput').options[6]
-        select.value = year2028.value;
-    })
+    // await ppt.page.evaluate((select) => {
+    //     const monthDecember = document.querySelector('#checkoutAddress-cardExpireDateMonthInput').options[12]
+    //     select.value = monthDecember.value;
+    // })
+
+    // select the year 2030
+    await ppt.page.select('#checkoutAddress-cardExpireDateMonthInput', '8');
+    // await ppt.page.evaluate((select) => {
+    //     const year2030 = document.querySelector('#checkoutAddress-cardExpireDateYearInput').options[8]
+    //     select.value = year2030.value;
+    // })
 
     // type the CVV
-    await ppt.page.type('#checkoutAddress-cardSecurityCodeInput', '910')
+    await ppt.page.type('#checkoutAddress-cardSecurityCodeInput', '123')
 
     // unselect the option 'Daha kolay alışveriş için kart bilgilerimi kaydet'
     await ppt.page.click('div.checkoutAddress-formController:nth-child(4) > div:nth-child(1) > label:nth-child(2) > div:nth-child(1)')
@@ -38,8 +41,10 @@ When("Bob clicks the checkout button", async () => {
     await ppt.page.click('.checkoutSinglePageFooter-button')
 })
 
-Then("Bob should see the payment page", async () => {
+Then("Bob should see the payment error", async () => {
     await ppt.page.waitForNavigation({ waitUntil: 'domcontentloaded' })
-    const url = await ppt.page.url();
-    assert.strictEqual(url, 'https://m.modanisa.com/checkout/?client_username=modanisa')
+    const paymentError = await ppt.page.evaluate(() => {
+        return document.querySelector('.checkoutPaymentTopError-errorText').textContent
+    });
+    assert.strictEqual(paymentError, 'Ödeme alınamadı')
 })

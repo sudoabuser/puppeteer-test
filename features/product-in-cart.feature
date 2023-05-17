@@ -1,5 +1,5 @@
 Feature: Make a failure payment
-    Suppose a product is already added in cart, proceed to payment and get the error message at the end.
+  Suppose a product is already added in cart, proceed to payment and get the error message at the end.
 
   Background: login to test account
     Given Bob is on the login page
@@ -18,9 +18,9 @@ Feature: Make a failure payment
     Given Bob is on the cart page
     When Bob clicks the payment button
     Then Bob should see the payment page
-
+  @demo
   Scenario: Make an unsuccessful payment
     Given Bob is on the payment page
-    When Bob fills out the payment form
-    And Bob clicks the checkout button
-    Then Bob should see the payment failure page
+    And Bob fills out the payment form
+    When Bob clicks the checkout button
+    Then Bob should see the payment error

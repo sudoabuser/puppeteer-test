@@ -19,32 +19,36 @@ Given("Bob is on the product detail page", async () => {
 When("Bob selects the size and color of the product", async () => {
   // some products don't have the size and color properties, they only have standard option.
   // so, try selecting the size and color, if not available, just add it to cart.
+
+  await ppt.page.waitForSelector("#other-color-products-container > h3");
+  await ppt.page.click("#other-color-products-container > a:nth-child(2)"); // select the first color, since there may not be a second one
+  selectedColor = await ppt.page.evaluate(() => {
+    const productColor = document.querySelector(
+      "#other-color-products-container > a:nth-child(2)"
+    );
+    return productColor.getAttribute("data-variant"); // fetch data-variant ,i.e. color, of the product
+  });
   try {
-    await ppt.page.waitForSelector("#other-color-products-container > h3");
-    await ppt.page.click("#other-color-products-container > a:nth-child(2)"); // select the first color, since there may not be a second one
-    selectedColor = await ppt.page.evaluate(() => {
-      const productColor = document.querySelector(
-        "#other-color-products-container > a:nth-child(2)"
-      );
-      return productColor.getAttribute("data-variant"); // fetch data-variant ,i.e. color, of the product
-    });
-    await ppt.page.waitForSelector("#size-box-container", {
-      waitUntil: "domcontentloaded",
-    }); // wait until the size options are loaded
+    const sizeContainer = await ppt.page.waitForSelector("#size-box-container", {
+      waitUntil: "domcontentloaded"
+    }); // wait until the size options are loaded;
 
-    await ppt.page.$eval("#size-box-container > select", (select) => {
-      // find the smallest size available
-      const firstAvailableOption = select.querySelector(
-        "option:not(.disable_selected):not([disabled])"
-      );
+    if (sizeContainer) {
+      await ppt.page.$eval("#size-box-container > select", (select) => {
+        // find the smallest size available
+        const firstAvailableOption = select.querySelector(
+          "option:not(.disable_selected):not([disabled])"
+        );
 
-      // select the option by changing the value of the select element
-      select.value = firstAvailableOption.value;
+        // select the option by changing the value of the select element
+        select.value = firstAvailableOption.value;
 
-      // trigger the 'change' event to simulate user interaction
-      const changeEvent = new Event("change", { bubbles: true });
-      select.dispatchEvent(changeEvent);
-    });
+        // trigger the 'change' event to simulate user interaction
+        const changeEvent = new Event("change", { bubbles: true });
+        select.dispatchEvent(changeEvent);
+      });
+    }
+
     await ppt.page.waitForTimeout(3000);
 
     selectedSize = await ppt.page.evaluate((el) => {
@@ -54,6 +58,7 @@ When("Bob selects the size and color of the product", async () => {
 
     console.log("\nselected size:", selectedSize);
     console.log("selected color:", selectedColor);
+
   } catch (error) {
     console.log("\nThis product only offers standard size and color selection");
   }

@@ -13,7 +13,7 @@ When("Bob clicks the payment button", async () => {
 })
 
 Then("Bob should see the payment page", async () => {
-  await ppt.page.waitForNavigation({ waitUntil: 'domcontentloaded' })
+  await ppt.page.waitForNavigation()
   const url = await ppt.page.url();
   assert.strictEqual(url, 'https://m.modanisa.com/checkout/?client_username=modanisa')
 })

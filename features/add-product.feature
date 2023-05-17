@@ -1,5 +1,5 @@
 Feature: Add a product in cart
-    Visit modanisa and add a product in cart, then log in to keep the product in cart
+  Visit modanisa and add a product in cart, then log in to keep the product in cart
 
   Scenario: Navigate to the homepage
     Given Bob is on the internet
@@ -15,15 +15,15 @@ Feature: Add a product in cart
     Given Bob is on the listing page
     When Bob selects a product
     Then Bob should see the product detail page
-
+  @login
   Scenario: Select the size and color of a product
     Given Bob is on the product detail page
-    When Bob selects the size and color of the product
-    And Bob adds the product in the cart
+    And Bob selects the size and color of the product
+    When Bob adds the product in the cart
     Then Bob should see the customized product in the cart
 
-  Scenario: Login
-    Given Bob is on the login page
-    And Bob fills out his login information
-    And Bob clicks on login button
-    And Bob should see the modanisa homepage
+  # Scenario: Login
+  #   Given Bob is on the login page
+  #   And Bob fills out his login information
+  #   And Bob clicks on login button
+  #   Then Bob should see the modanisa homepage
