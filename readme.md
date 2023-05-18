@@ -22,7 +22,9 @@ after cloning this repository to your local machine, cd into it and run consecut
 
 ```
 npm i puppeteer
+npm i puppeteer-extra puppeteer-extra-plugin-stealth
 npm i @cucumber/cucumber
+
 ```
 
 # Usage:
