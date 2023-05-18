@@ -11,21 +11,23 @@ When("Bob fills out the payment form", async () => {
     await ppt.page.type('#checkoutAddress-cardOwnerNameInput', 'John Doe')
     await ppt.page.type('#checkoutAddress-cardNumberInput', '5528790000000008')
 
-    // select the month april
-    await ppt.page.select('#checkoutAddress-cardExpireDateMonthInput', '12');
+   // Click on the month select
+   await ppt.page.click('#checkoutAddress-cardExpireDateMonthInput');
 
-    // await ppt.page.evaluate((select) => {
-    //     const monthDecember = document.querySelector('#checkoutAddress-cardExpireDateMonthInput').options[12]
-    //     select.value = monthDecember.value;
-    // })
-
-    // select the year 2030
-    await ppt.page.select('#checkoutAddress-cardExpireDateMonthInput', '8');
-    // await ppt.page.evaluate((select) => {
-    //     const year2030 = document.querySelector('#checkoutAddress-cardExpireDateYearInput').options[8]
-    //     select.value = year2030.value;
-    // })
-
+   // Wait for the month options to be visible
+   await ppt.page.waitForSelector('#checkoutAddress-cardExpireDateMonthInput option');
+ 
+   // Select the desired month option
+   await ppt.page.select('#checkoutAddress-cardExpireDateMonthInput', '12');
+ 
+   // Click on the year select
+   await ppt.page.click('#checkoutAddress-cardExpireDateYearInput');
+ 
+   // Wait for the year options to be visible
+   await ppt.page.waitForSelector('#checkoutAddress-cardExpireDateYearInput option');
+ 
+   // Select the desired year option
+   await ppt.page.select('#checkoutAddress-cardExpireDateYearInput', '2023');
     // type the CVV
     await ppt.page.type('#checkoutAddress-cardSecurityCodeInput', '123')
 
@@ -42,7 +44,7 @@ When("Bob clicks the checkout button", async () => {
 })
 
 Then("Bob should see the payment error", async () => {
-    await ppt.page.waitForNavigation({ waitUntil: 'domcontentloaded' })
+    await ppt.page.waitForNavigation({ waitUntil: 'networkidle0' })
     const paymentError = await ppt.page.evaluate(() => {
         return document.querySelector('.checkoutPaymentTopError-errorText').textContent
     });
