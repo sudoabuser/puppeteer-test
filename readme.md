@@ -14,9 +14,9 @@ first, install npm if you don't already have it.
 
 `sudo apt install npm`  Ubuntu
 
-`sudo pacman -S npm   `  Arch
+`sudo pacman -S npm`  Arch
 
-`sudo yum install nodejs npm `  Red Hat
+`sudo yum install nodejs npm`  Red Hat
 
 after cloning this repository to your local machine, cd into it and run consecutively:
 
