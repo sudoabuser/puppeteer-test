@@ -26,7 +26,7 @@ After({ tags: "@emptyCart" }, async () => {
       await ppt.page.click(".basketList-removeBasket");
       await ppt.page.waitForSelector("#basketList-removePopupRemoveButton");
       await ppt.page.click("#basketList-removePopupRemoveButton");
-      console.log("\nOne item was removed");
+      console.log("\nOne item removed from basket");
     }
   } catch (error) {
     console.log("\nCart already contains one item");

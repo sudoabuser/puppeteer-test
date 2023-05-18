@@ -12,7 +12,8 @@ Given("Bob has a product in the cart", async () => {
 
   // returns the child element (product) count of the cart on top-right corner
   
-  console.log('\nThere are %d items in cart', basketCounter)
+  console.log('\nThere %s %d item%s in the cart', basketCounter === 1 ? 'is' : 'are', basketCounter, basketCounter === 1 ? '' : 's');
+
   
   try {
     let emptyBasket = 0;
