@@ -13,7 +13,7 @@ When("Bob clicks the payment button", async () => {
   await ppt.page.click('.basketPage-buyButton');
 })
 
-Then("Bob should see the payment page", async () => { //3 saniye timeout her internette calismayabilir
+Then("Bob should see the payment page", async () => { 
   await ppt.page.waitForTimeout(3000)
   const url = await ppt.page.url();
   assert.strictEqual(url, 'https://m.modanisa.com/checkout/?client_username=modanisa')

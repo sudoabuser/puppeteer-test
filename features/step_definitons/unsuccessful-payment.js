@@ -11,30 +11,31 @@ When("Bob fills out the payment form", async () => {
     await ppt.page.type('#checkoutAddress-cardOwnerNameInput', 'John Doe')
     await ppt.page.type('#checkoutAddress-cardNumberInput', '5528790000000008')
 
-   // Click on the month select
+   // click on the month select
    await ppt.page.click('#checkoutAddress-cardExpireDateMonthInput');
 
-   // Wait for the month options to be visible
+   // wait for the month options to be visible
    await ppt.page.waitForSelector('#checkoutAddress-cardExpireDateMonthInput option');
  
-   // Select the desired month option
+   // select the desired month option
    await ppt.page.select('#checkoutAddress-cardExpireDateMonthInput', '12');
  
-   // Click on the year select
+   // click on the year select
    await ppt.page.click('#checkoutAddress-cardExpireDateYearInput');
  
-   // Wait for the year options to be visible
+   // wait for the year options to be visible
    await ppt.page.waitForSelector('#checkoutAddress-cardExpireDateYearInput option');
  
-   // Select the desired year option
+   // select the desired year option
    await ppt.page.select('#checkoutAddress-cardExpireDateYearInput', '2023');
+   
     // type the CVV
     await ppt.page.type('#checkoutAddress-cardSecurityCodeInput', '123')
 
     // unselect the option 'Daha kolay alışveriş için kart bilgilerimi kaydet'
     await ppt.page.click('div.checkoutAddress-formController:nth-child(4) > div:nth-child(1) > label:nth-child(2) > div:nth-child(1)')
 
-    // select the selling promise
+    // accept the selling promise
     await ppt.page.click('div.checkoutAddress-formController-isCheckbox:nth-child(2) > div:nth-child(1) > label:nth-child(2) > div:nth-child(1)')
 })
 

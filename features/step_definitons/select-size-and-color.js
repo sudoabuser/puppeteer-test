@@ -4,16 +4,15 @@ const ppt = require("./hooks");
 const productIds = require("./select-a-product-listed");
 setDefaultTimeout(20000);
 
-let selectedSize;
 let selectedColor;
 
 Given("Bob is on the product detail page", async () => {
   await ppt.page.goto("https://www.modanisa.com", {
     waitUntil: "domcontentloaded",
-  }); // nav to home page
+  });    // nav to home page
   await ppt.page.focus("#search-input");
-  await ppt.page.keyboard.type(productIds[1]); // type the product id from the previous scenario
-  await ppt.page.keyboard.type(String.fromCharCode(13)); // press 'Enter', 13 is the ASCII code of the 'Enter' key
+  await ppt.page.keyboard.type(productIds[1]);    // type the product id from the previous scenario
+  await ppt.page.keyboard.type(String.fromCharCode(13));    // press 'Enter', 13 is the ASCII code of the 'Enter' key
 });
 
 When("Bob selects the size and color of the product", async () => {
@@ -21,17 +20,17 @@ When("Bob selects the size and color of the product", async () => {
   // so, try selecting the size and color, if not available, just add it to cart.
 
   await ppt.page.waitForSelector("#other-color-products-container > h3");
-  await ppt.page.click("#other-color-products-container > a:nth-child(2)"); // select the first color, since there may not be a second one
+  await ppt.page.click("#other-color-products-container > a:nth-child(2)");    // select the first color, since there may not be a second one
   selectedColor = await ppt.page.evaluate(() => {
     const productColor = document.querySelector(
       "#other-color-products-container > a:nth-child(2)"
     );
-    return productColor.getAttribute("data-variant"); // fetch data-variant ,i.e. color, of the product
+    return productColor.getAttribute("data-variant");    // fetch data-variant ,i.e. color, of the product
   });
   try {
     const sizeContainer = await ppt.page.waitForSelector("#size-box-container", {
       waitUntil: "domcontentloaded"
-    }); // wait until the size options are loaded;
+    });    // wait until the size options are loaded;
 
     if (sizeContainer) {
       const smallestSize = await ppt.page.$eval("#size-box-container > select", (select) => {
@@ -52,7 +51,7 @@ When("Bob selects the size and color of the product", async () => {
     console.log("\nselected size:", smallestSize);
     console.log("selected color:", selectedColor);
     }
-    
+
   } catch (error) {
     console.log(error)
     console.log("\nThis product only offers standard size and color selection");
@@ -61,7 +60,7 @@ When("Bob selects the size and color of the product", async () => {
 
 When("Bob adds the product in the cart", async () => {
   await ppt.page.waitForSelector(".basket-button");
-  await ppt.page.click(".basket-button"); // click the button 'Sepete Ekle'
+  await ppt.page.click(".basket-button");    // click the button 'Sepete Ekle'
   await ppt.page.waitForTimeout(3000);
 });
 
