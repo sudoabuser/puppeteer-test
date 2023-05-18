@@ -21,9 +21,3 @@ Feature: Add a product in cart
     And Bob selects the size and color of the product
     When Bob adds the product in the cart
     Then Bob should see the customized product in the cart
-
-  # Scenario: Login
-  #   Given Bob is on the login page
-  #   And Bob fills out his login information
-  #   And Bob clicks on login button
-  #   Then Bob should see the modanisa homepage
