@@ -12,11 +12,11 @@ we need npm (node package manager), puppeteer and cucumber for this project. her
 
 first, install npm if you don't already have it.
 
-`sudo apt install npm` // Ubuntu
+`sudo apt install npm`  Ubuntu
 
-`sudo pacman -S npm   ` // Arch
+`sudo pacman -S npm   `  Arch
 
-`sudo yum install nodejs npm ` // Red Hat
+`sudo yum install nodejs npm `  Red Hat
 
 after cloning this repository to your local machine, cd into it and run consecutively:
 
@@ -27,9 +27,9 @@ npm i @cucumber/cucumber
 
 # Usage:
 
-`npm test` // run all the tests
+`npm test`  to run all the tests
 
-`npm run demo` // run the tests tagged as @demo. don't forget to tag scenarios in file 'tasks.feature'
+`npm run demo`  to run the tests tagged as @demo. don't forget to tag scenarios in file 'tasks.feature'
 
 ## Note:
 
