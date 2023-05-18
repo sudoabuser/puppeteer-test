@@ -45,6 +45,7 @@ When("Bob clicks the checkout button", async () => {
 
 Then("Bob should see the payment error", async () => {
     await ppt.page.waitForNavigation({ waitUntil: 'networkidle0' })
+    await ppt.page.waitForSelector('.checkoutPaymentTopError-errorText')
     const paymentError = await ppt.page.evaluate(() => {
         return document.querySelector('.checkoutPaymentTopError-errorText').textContent
     });

@@ -8,8 +8,9 @@ Given("Bob is on the cart page", async () => {
 });
 
 When("Bob clicks the payment button", async () => {
-  await ppt.page.waitForSelector('.basketPage-buyButton')
-  await ppt.page.click('.basketPage-buyButton')
+  await ppt.page.waitForTimeout(3000)
+  await ppt.page.waitForSelector('.basketPage-buyButton');
+  await ppt.page.click('.basketPage-buyButton');
 })
 
 Then("Bob should see the payment page", async () => { //3 saniye timeout her internette calismayabilir
