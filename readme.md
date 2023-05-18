@@ -12,11 +12,11 @@ we need npm (node package manager), puppeteer and cucumber for this project. her
 
 first, install npm if you don't already have it.
 
-`sudo apt install npm`  Ubuntu
+Ubuntu -> `sudo apt install npm`
 
-`sudo pacman -S npm`  Arch
+Arch -> `sudo pacman -S npm`
 
-`sudo yum install nodejs npm`  Red Hat
+Red Hat -> `sudo yum install nodejs npm`
 
 after cloning this repository to your local machine, cd into it and run consecutively:
 
