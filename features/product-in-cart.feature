@@ -7,18 +7,18 @@ Feature: Make a failure payment
     And Bob clicks on login button
     And Bob should see the modanisa homepage
 
-  @emptyCart @demo
+  @emptyCart
   Scenario: Navigate to cart
     Given Bob has a product in the cart
     When Bob navigates to the cart
     Then Bob should see the cart page
 
-  @demo
+
   Scenario: Navigate to payment
     Given Bob is on the cart page
     When Bob clicks the payment button
     Then Bob should see the payment page
-  @demo
+
   Scenario: Make an unsuccessful payment
     Given Bob is on the payment page
     And Bob fills out the payment form
