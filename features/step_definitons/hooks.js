@@ -16,7 +16,7 @@ After(async () => {
   await ppt.browser.close();
 });
 
-After({ tags: "@emptyCart" }, async () => {
+After({ tags: "@reduceCart" }, async () => {
   try {
     const basketItemCount = await ppt.page.$eval("#basketList-list", (el) => {
       return el.childElementCount;
