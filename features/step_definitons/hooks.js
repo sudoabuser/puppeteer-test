@@ -33,8 +33,9 @@ After({ tags: "@reduceCart" }, async () => {
   }
 });
 
-After({ tags: "@login" }, async () => {
-  await ppt.page.click("#headerLoginUrl");
+Before({ tags: "@login" }, async () => {
+  await ppt.page.goto("https://www.modanisa.com/membership/login/?return=%2F", {waitUntil:'domcontentloaded'});
+  // await ppt.page.click("#headerLoginUrl");
   await ppt.page.waitForSelector(".select-email");
   await ppt.page.click(".select-email");
   await ppt.page.click("#email");

@@ -15,6 +15,7 @@ Feature: Add a product in cart
     Given Bob is on the listing page
     When Bob selects a product
     Then Bob should see the product detail page
+    
   @login
   Scenario: Select the size and color of a product
     Given Bob is on the product detail page
