@@ -24,12 +24,9 @@ Given("Bob has a product in the cart", async () => {
 });
 
 When("Bob navigates to the cart", async () => {  //problem // can't click!!
-  const cart = ppt.page.$('#cart')
-  await ppt.page.$eval((el) => {
-    return el.click
-    
-  }, cart)
-  await ppt.page.click('#cart', { waitUntil: "domcontentloaded" });
+  await ppt.page.evaluate(() => {
+    document.querySelector('#cart').click()
+  })
 });
 
 Then("Bob should see the cart page", async () => {
