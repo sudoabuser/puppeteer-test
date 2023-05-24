@@ -61,10 +61,11 @@ When("Bob selects the size and color of the product", async () => {
 When("Bob adds the product in the cart", async () => {
   await ppt.page.waitForSelector(".basket-button");
   await ppt.page.click(".basket-button");    // click the button 'Sepete Ekle'
-  await ppt.page.waitForTimeout(3000);
+  console.log('\nProduct %d added to cart', productIds[1])
 });
 
 Then("Bob should see the customized product in the cart", async () => {
+  await ppt.page.waitForSelector(".count");
   let basketCounter = await ppt.page.$(".count");
   let productCounter = await ppt.page.evaluate((el) => {
     // returns the counter of the cart on top-right corner

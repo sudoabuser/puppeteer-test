@@ -5,7 +5,7 @@ setDefaultTimeout(30000);
 
 // Check if the basket counter = 0
 Given("Bob has a product in the cart", async () => {
-  await ppt.page.waitForTimeout(7000)
+  await ppt.page.waitForTimeout(3000)
   let basketCounter = await ppt.page.evaluate(() => {
     return document.querySelector(".inner").childElementCount;
   });
