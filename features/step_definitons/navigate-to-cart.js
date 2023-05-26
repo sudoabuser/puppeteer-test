@@ -23,7 +23,7 @@ Given("Bob has a product in the cart", async () => {
   }
 });
 
-When("Bob navigates to the cart", async () => {  //problem // can't click!!
+When("Bob navigates to the cart", async () => {
   await ppt.page.evaluate(() => {
     document.querySelector('#cart').click()
   })

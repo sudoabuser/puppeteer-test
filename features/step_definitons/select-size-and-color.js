@@ -2,9 +2,11 @@ const { Given, When, Then, setDefaultTimeout } = require("@cucumber/cucumber");
 const assert = require("assert");
 const ppt = require("./hooks");
 const productIds = require("./select-a-product-listed");
-setDefaultTimeout(20000);
+setDefaultTimeout(10000);
 
-let selectedColor;
+let basketCounterSel
+let productCounter
+let productCounterDifference
 
 Given("Bob is on the product detail page", async () => {
   await ppt.page.goto("https://www.modanisa.com", {
@@ -21,63 +23,73 @@ When("Bob selects the size and color of the product", async () => {
 
   await ppt.page.waitForSelector("#other-color-products-container > h3");
   await ppt.page.click("#other-color-products-container > a:nth-child(2)");    // select the first color, since there may not be a second one
-  selectedColor = await ppt.page.evaluate(() => {
+  const selectedColor = await ppt.page.evaluate(() => {
     const productColor = document.querySelector(
       "#other-color-products-container > a:nth-child(2)"
     );
     return productColor.getAttribute("data-variant");    // fetch data-variant ,i.e. color, of the product
   });
-  try {
-    const sizeContainer = await ppt.page.waitForSelector("#size-box-container", {
-      waitUntil: "domcontentloaded"
-    });    // wait until the size options are loaded;
 
-    if (sizeContainer) {
-      const smallestSize = await ppt.page.$eval("#size-box-container > select", (select) => {
-        // find the smallest size available
-        const firstAvailableOption = select.querySelector(
-          "option:not(.disable_selected):not([disabled])"
-        );
+  const sizeContainer = await ppt.page.$("#size-box-container", {
+    waitUntil: "domcontentloaded"
+  });    // wait until the size options are loaded;
 
-        // select the option by changing the value of the select element
-        select.value = firstAvailableOption.value;
+  if (sizeContainer) {
+    console.log('\nsize container available')
+    const smallestSize = await ppt.page.$eval("#size-box-container > select", (select) => {
+      // find the smallest size available
+      const firstAvailableOption = select.querySelector(
+        "option:not(.disable_selected):not([disabled])"
+      );
 
-        // trigger the 'change' event to simulate user interaction
-        const changeEvent = new Event("change", { bubbles: true });
-        select.dispatchEvent(changeEvent);
-        return firstAvailableOption.innerHTML
-      });
+      // select the option by changing the value of the select element
+      select.value = firstAvailableOption.value;
 
+      // trigger the 'change' event to simulate user interaction
+      const changeEvent = new Event("change", { bubbles: true });
+      select.dispatchEvent(changeEvent);
+      return firstAvailableOption.innerHTML
+    });
     console.log("\nselected size:", smallestSize);
     console.log("selected color:", selectedColor);
-    }
+  }
 
-  } catch (error) {
-    console.log(error)
-    console.log("\nThis product only offers standard size and color selection");
+  else {
+    console.log('\nstandard size')
+    console.log("selected color:", selectedColor);
   }
 });
 
-When("Bob adds the product in the cart", async () => {
+When("Bob adds the product in the cart", async () => {  
+  basketCounterSel = await ppt.page.$(".count");
+  productCounter = await ppt.page.evaluate((el) => {
+    // returns the counter of the cart on top-right corner
+    return el.innerHTML;
+  }, basketCounterSel);
+
   await ppt.page.waitForSelector(".basket-button");
   await ppt.page.click(".basket-button");    // click the button 'Sepete Ekle'
-  console.log('\nProduct %d added to cart', productIds[1])
+
+  let productCounterNew = await ppt.page.evaluate((el) => {
+    // returns the new counter of the cart on top-right corner, after adding the item to the cart.
+    return el.innerHTML;
+  }, basketCounterSel);
+
+  productCounterDifference = productCounterNew - productCounter
+
+  if(productCounterDifference = 1){    // check if the product is added to the cart
+    console.log('\nProduct %d added to cart', productIds[1])
+  }
 });
 
 Then("Bob should see the customized product in the cart", async () => {
   await ppt.page.waitForSelector(".count");
-  let basketCounter = await ppt.page.$(".count");
-  let productCounter = await ppt.page.evaluate((el) => {
-    // returns the counter of the cart on top-right corner
-    return el.innerHTML;
-  }, basketCounter);
-
+  // product counter should increase by 1
   try {
-    let desiredProductCount = "1";
-    assert.strictEqual(productCounter, desiredProductCount);
+    assert.strictEqual(productCounterDifference, 1);
   } catch (error) {
     throw new Error(
-      "Item count in the cart is away from the desired value!:",
+      "There is no new item in the cart!",
       productCounter
     );
   }

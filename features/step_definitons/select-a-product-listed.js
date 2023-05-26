@@ -10,12 +10,12 @@ Given('Bob is on the listing page', async () => {
 
 When('Bob selects a product', async () => {
     let productId = await ppt.page.evaluate(() => {
-        let product = document.querySelector('[data-testid="listing-product"]');
+        let product = document.querySelector('[data-testid="listing-product"]:nth-child(12)');
         return product ? product.getAttribute('data-product-id') : null;  //take the product id
     })
     productIds.push(productId)  //place it in an array
-    await ppt.page.waitForSelector('[data-testid="listing-product"]', { waitUntil: 'domcontentloaded' })
-    await ppt.page.click('[data-testid="listing-product"]');
+    await ppt.page.waitForSelector('[data-testid="listing-product"]:nth-child(12)', { waitUntil: 'domcontentloaded' })
+    await ppt.page.click('[data-testid="listing-product"]:nth-child(12)');
     console.log('\nclicked to product', productId)
 });
 
