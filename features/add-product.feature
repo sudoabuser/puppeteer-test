@@ -5,18 +5,18 @@ Feature: Add a product in cart
     Given Bob is on the internet
     When Bob goes to www.modanisa.com
     Then Bob should see the modanisa homepage
-  @demo
+
   Scenario: Click on a banner
     Given Bob is on the homepage
     When Bob clicks on a banner
     Then Bob should be redirected to the associated listing page
-  @demo
+
   Scenario: Select a product from the listing page
     Given Bob is on the listing page
     When Bob selects a product
     Then Bob should see the product detail page
 
-  @login @demo
+  @login
   Scenario: Select the size and color of a product
     Given Bob is on the product detail page
     And Bob selects the size and color of the product

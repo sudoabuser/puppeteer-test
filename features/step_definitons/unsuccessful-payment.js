@@ -3,7 +3,7 @@ const assert = require("assert");
 const ppt = require("./hooks");
 setDefaultTimeout(20000);
 
-Given("Bob is on the payment page", async () => {
+Given("Bob is on the checkout page", async () => {
     await ppt.page.goto('https://modanisa.com/checkout/?client_username=modanisa', {waitUntil:'networkidle0'})
 });
 

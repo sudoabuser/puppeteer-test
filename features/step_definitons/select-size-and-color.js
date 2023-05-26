@@ -55,7 +55,7 @@ When("Bob selects the size and color of the product", async () => {
   }
 
   else {
-    console.log('\nstandard size')
+    console.log('\nsize: standard')
     console.log("selected color:", selectedColor);
   }
 });

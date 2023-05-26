@@ -13,8 +13,8 @@ When("Bob clicks the payment button", async () => {
   await ppt.page.click('.basketPage-buyButton');
 })
 
-Then("Bob should see the payment page", async () => { 
-  await ppt.page.waitForTimeout(3000)
+Then("Bob should see the checkout page", async () => { 
   const url = await ppt.page.url();
   assert.strictEqual(url, 'https://m.modanisa.com/checkout/?client_username=modanisa')
+  await ppt.page.waitForSelector('#checkoutSinglePage-contentContainer > div.checkoutSinglePage-mainContainer > div.checkoutSinglePageAddress > h3')
 })
