@@ -1,0 +1,22 @@
+stages:
+    - test
+
+cache:
+    paths:
+        - node_modules/
+
+.node_template:
+    image: buildkite/puppeteer
+
+tests:
+    extends: .node_template
+    stage: test
+    variables:
+        CI: "true"
+    before_script:
+        - echo "checking node version"
+        - node -v
+        - echo "installing dependencies..."
+        - npm install
+    script:
+        - npm run test
